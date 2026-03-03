@@ -16,11 +16,11 @@ class User extends Authenticatable implements FilamentUser
     use HasFactory, Notifiable;
 
     /**
-     * Send the password reset notification.
+     * Send the password reset notification via Resend API.
      */
     public function sendPasswordResetNotification($token): void
     {
-        $this->notify(new ResetPasswordNotification($token));
+        (new ResetPasswordNotification($token))->send($this);
     }
 
     public function canAccessPanel(Panel $panel): bool
